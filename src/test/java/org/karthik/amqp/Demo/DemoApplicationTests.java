@@ -1,4 +1,4 @@
-/*package org.karthik.amqp.Demo;
+package org.karthik.amqp.Demo;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,4 +14,4 @@ public class DemoApplicationTests {
 	}
 
 }
-*/
+

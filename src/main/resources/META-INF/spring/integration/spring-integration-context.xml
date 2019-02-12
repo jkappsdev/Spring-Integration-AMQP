@@ -70,32 +70,27 @@
 
 	<!--@@@@@@@@@@@@@@@@@@@@@@@@ CMPS code starts @@@@@@@@@@@@@@@@@@@@@@ -->
 
-	<int:chain id="restServiceRoute" input-channel="channel">
+	<int:chain id="restServiceRoute" input-channel="fromRabbit">
 		<int:transformer
 			expression="'Received Bala: ' + payload" />
 
 		<int:gateway request-channel="callTransformer" />
 
 		<int:service-activator method="processMessage1">
-			<bean
-				class="com.comcast.commercial.messagepublication.rest.processor.PublishRestRequestProcessor" />
+			<bean class="com.comcast.commercial.messagepublication.rest.processor.PublishRestRequestProcessor" />
 		</int:service-activator>
 
 		<int:gateway request-channel="callRouter" />
 
-		<int-stream:stdout-channel-adapter
-			id="consoleOut1" append-newline="true" />
+		<int-stream:stdout-channel-adapter id="consoleOut1" append-newline="true" />
 	</int:chain>
 
-	<int:transformer input-channel="callTransformer"
-		method="doTransform">
-		<bean
-			class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
+	<int:transformer input-channel="callTransformer" method="doTransform">
+		<bean class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
 	</int:transformer>
 
 	<int:router input-channel="callRouter" method="vaidator">
-		<bean
-			class="com.comcast.commercial.messagepublication.integration.IntegrationRouter"></bean>
+		<bean class="com.comcast.commercial.messagepublication.integration.IntegrationRouter"></bean>
 	</int:router>
 
 	<int:channel id="dataPersistAndPostChannel"></int:channel>
@@ -103,14 +98,12 @@
 
 	<int:transformer
 		input-channel="dataPersistAndPostChannel" method="doTransform">
-		<bean
-			class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
+		<bean class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
 	</int:transformer>
 
 	<int:transformer
 		input-channel="publishRestResponseChannel" method="doTransform">
-		<bean
-			class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
+		<bean class="com.comcast.commercial.messagepublication.integration.TransformRestPublisher" />
 	</int:transformer>
 	
 	<int:channel id="channel"></int:channel>
